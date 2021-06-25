@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>全球疫情数据</title>
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/themes/walden.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/themes/westeros.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/world.js"></script>
+</head>
+<body>
+<div id="global-timeline" style="width:100%; height:730px;"></div>
+<script>
+    var global_timeline = echarts.init(document.getElementById('global-timeline'), 'white', {renderer: 'canvas'});
+
+    $.ajax({
+        type: "GET",
+        url: "http://127.0.0.1:8000/api/big-global-timeline",
+        dataType: 'json',
+        success: function (result) {
+            global_timeline.setOption(result.data);
+        }
+    });
+
+</script>
+</body>
+</html>

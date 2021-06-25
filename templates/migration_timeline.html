@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>疫情期间武汉人员迁徙地图</title>
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/themes/walden.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/themes/westeros.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/china.js"></script>
+    <link href={% static "/layui/css/layui.css" %} rel="stylesheet">
+    <script src={% static '/layui/layui.js' %}></script>
+</head>
+<body>
+<div id="migration-timeline" style="width:100%; height:730px;"></div>
+<script>
+    var migration_timeline = echarts.init(document.getElementById('migration-timeline'), 'white', {renderer: 'canvas'});
+    layer.load();
+    $.ajax({
+        type: "GET",
+        url: "http://127.0.0.1:8000/api/big-migration-timeline",
+        dataType: 'json',
+        success: function (result) {
+            layer.closeAll('loading');
+            migration_timeline.setOption(result.data);
+        }
+    });
+
+</script>
+</body>

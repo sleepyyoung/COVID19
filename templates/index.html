@@ -1,0 +1,194 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>COVID-19监控面板</title>
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/themes/walden.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/themes/westeros.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/world.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/china.js"></script>
+    <link href={% static "/layui/css/layui.css" %} rel="stylesheet">
+    <script src={% static '/layui/layui.js' %}></script>
+    <style>
+        body {
+            background-color: #333333
+        }
+    </style>
+</head>
+<body>
+<div class="layui-row">
+    <div class="layui-col-xs4">
+        <div id="pie" style="width:100%; height:350px;"></div>
+        <script>
+            var pie = echarts.init(document.getElementById('pie'), 'white', {renderer: 'canvas'});
+
+            $.ajax({
+                type: "GET",
+                url: "http://127.0.0.1:8000/api/pie",
+                dataType: 'json',
+                success: function (result) {
+                    pie.setOption(result.data);
+                }
+            });
+
+        </script>
+    </div>
+    <div class="layui-col-xs4">
+        <div id="local-trend" style="width:100%; height:350px;"></div>
+        <script>
+            var local_trend = echarts.init(document.getElementById('local-trend'), 'white', {renderer: 'canvas'});
+
+            $.ajax({
+                type: "GET",
+                url: "http://127.0.0.1:8000/api/local-trend",
+                dataType: 'json',
+                success: function (result) {
+                    local_trend.setOption(result.data);
+                }
+            });
+
+        </script>
+    </div>
+    <div class="layui-col-xs4">
+        <div id="global-timeline" style="width:100%; height:350px;"></div>
+        <script>
+            var global_timeline = echarts.init(document.getElementById('global-timeline'), 'white', {renderer: 'canvas'});
+
+            $.ajax({
+                type: "GET",
+                url: "http://127.0.0.1:8000/api/global-timeline",
+                dataType: 'json',
+                success: function (result) {
+                    global_timeline.setOption(result.data);
+                }
+            });
+
+        </script>
+    </div>
+</div>
+
+<div class="layui-row">
+    <div class="layui-col-xs4" style="height: 40px;position: relative;">
+        <div class="grid-demo grid-demo-bg1" style="position: absolute;top:30%;">
+            <div class="layui-inline">
+                <label style="width: 100px;color: #00FFFF" class="layui-input-inline"><b>查询省份详情：</b></label>
+                <div class="layui-input-inline">
+                    <label>
+                        <select id="province">
+                            {% for province in provinces %}
+                                <option> {{ province }} </option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                </div>
+                <button id="query-province" type="button" class="layui-btn layui-btn-xs">点击查询</button>
+            </div>
+        </div>
+        <script>
+            $("#query-province").click(function () {
+                const province = $("#province").val();
+                layer.open({
+                    type: 2,
+                    title: province,
+                    content: '/province-detail/' + province,
+                    area: ['1000px', '500px'],
+                    maxmin: false
+                });
+            })
+        </script>
+    </div>
+    <div class="layui-col-xs4" style="height: 40px;">
+        <div class="grid-demo">
+            <span style="color: #00FFFF;font-size: 30px;"><b>最近更新时间：</b></span>
+            <span style="color: #FF00FF;font-size: 20px;"><b>{{ last_update_time }}</b></span>
+        </div>
+    </div>
+    <div class="layui-col-xs4" style="height: 40px;position: relative;">
+        <div class="grid-demo grid-demo-bg1" style="position: absolute;top:30%;">
+            <div class="layui-inline">
+                <label style="width: 100px;color: #00FFFF" class="layui-input-inline"><b>查询国家详情：</b></label>
+                <div class="layui-input-inline">
+                    <label>
+                        <select id="country">
+                            {% for country in countries %}
+                                <option> {{ country }} </option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                </div>
+                <button id="query-country" type="button" class="layui-btn layui-btn-xs">点击查询</button>
+            </div>
+        </div>
+        <script>
+            $("#query-country").click(function () {
+                const country = $("#country").val();
+                layer.open({
+                    type: 2,
+                    title: country,
+                    content: '/country-detail/' + country,
+                    area: ['1000px', '500px'],
+                    maxmin: false
+                });
+            })
+        </script>
+    </div>
+</div>
+<div class="layui-row">
+    <div class="layui-col-xs4">
+        <div id="china-detail-timeline" style="width:500px; height:350px;"></div>
+        <script>
+            var china_detail_timeline = echarts.init(document.getElementById('china-detail-timeline'), 'white', {renderer: 'canvas'});
+
+            $.ajax({
+                type: "GET",
+                url: "http://127.0.0.1:8000/api/china-detail-timeline",
+                dataType: 'json',
+                success: function (result) {
+                    china_detail_timeline.setOption(result.data);
+                }
+            });
+
+        </script>
+    </div>
+    <div class="layui-col-xs4">
+        <div id="china-trend" style="width:500px; height:350px;"></div>
+        <script>
+            var china_trend = echarts.init(document.getElementById('china-trend'), 'white', {renderer: 'canvas'});
+
+            $.ajax({
+                type: "GET",
+                url: "http://127.0.0.1:8000/api/china-trend",
+                dataType: 'json',
+                success: function (result) {
+                    china_trend.setOption(result.data);
+                }
+            });
+
+        </script>
+    </div>
+    <div class="layui-col-xs4">
+        <div id="migration-timeline" style="width:500px; height:350px;"></div>
+        <script>
+            layer.load(0, {offset: ['500px', '1300px'], zIndex: -1});
+
+            var migration_timeline = echarts.init(document.getElementById('migration-timeline'), 'white', {renderer: 'canvas'});
+
+            $.ajax({
+                type: "GET",
+                url: "http://127.0.0.1:8000/api/migration-timeline",
+                dataType: 'json',
+                success: function (result) {
+                    layer.closeAll('loading');
+                    migration_timeline.setOption(result.data);
+                }
+            });
+
+        </script>
+    </div>
+</div>
+</div>
+</body>
+</html>

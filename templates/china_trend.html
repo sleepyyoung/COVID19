@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>国内疫情发展趋势</title>
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/themes/walden.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/themes/westeros.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/china.js"></script>
+    <link href={% static "/layui/css/layui.css" %} rel="stylesheet">
+    <script src={% static '/layui/layui.js' %}></script>
+</head>
+<body>
+<div id="china-trend" style="width:100%; height:750px;"></div>
+<script>
+    var china_trend = echarts.init(document.getElementById('china-trend'), 'white', {renderer: 'canvas'});
+
+    $.ajax({
+        type: "GET",
+        url: "http://127.0.0.1:8000/api/big-china-trend",
+        dataType: 'json',
+        success: function (result) {
+            china_trend.setOption(result.data);
+        }
+    });
+
+</script>
+</body>

@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/themes/walden.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/themes/westeros.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/heilongjiang.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/shanghai.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/neimenggu.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/jilin.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/liaoning.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/hebei.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/tianjin.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/shanxi.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/shanxi1.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/gansu.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/ningxia.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/qinghai.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/xinjiang.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/xizang.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/sichuan.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/chongqing.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/shandong.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/henan.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/jiangsu.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/anhui.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/hubei.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/zhejiang.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/fujian.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/jiangxi.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/hunan.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/guizhou.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/guangxi.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/hainan.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/guangdong.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/beijing.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/yunnan.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/xianggang.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/aomen.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/taiwan.js"></script>
+
+
+</head>
+<body style="overflow-x: hidden">
+<div id="province-detail" style="width:90%; height:350px;"></div>
+<script>
+    var province_detail = echarts.init(document.getElementById('province-detail'), 'white', {renderer: 'canvas'});
+
+    $.ajax({
+        type: "GET",
+        url: "http://127.0.0.1:8000/api/province-detail/{{ province }}",
+        dataType: 'json',
+        success: function (result) {
+            province_detail.setOption(result.data);
+        }
+    });
+
+</script>
+
+<div id="province-new" style="width:90%; height:350px;"></div>
+<script>
+    var province_new = echarts.init(document.getElementById('province-new'), 'white', {renderer: 'canvas'});
+
+    $.ajax({
+        type: "GET",
+        url: "http://127.0.0.1:8000/api/province-new/{{ province }}",
+        dataType: 'json',
+        success: function (result) {
+            province_new.setOption(result.data);
+        }
+    });
+
+</script>
+
+<div id="province-total" style="width:90%; height:350px;"></div>
+<script>
+    var province_total = echarts.init(document.getElementById('province-total'), 'white', {renderer: 'canvas'});
+
+    $.ajax({
+        type: "GET",
+        url: "http://127.0.0.1:8000/api/province-total/{{ province }}",
+        dataType: 'json',
+        success: function (result) {
+            province_total.setOption(result.data);
+        }
+    });
+
+</script>
+</body>
