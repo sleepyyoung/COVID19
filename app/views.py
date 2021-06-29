@@ -812,6 +812,7 @@ china_day_list = china_timeline['chinaDayList']
 china_add_line = (
     Line().add_xaxis(
         xaxis_data=china_day_add_list_date).add_yaxis(
+        "", [], is_smooth=True).add_yaxis(
         is_smooth=True,
         series_name="新增确诊",
         y_axis=china_day_add_list_confirm).add_yaxis(
@@ -890,6 +891,8 @@ china_merge_confirm_line = (
 china_now_confirm_line = (
     Line().add_xaxis(
         xaxis_data=china_day_list_date).add_yaxis(
+        "", [], is_smooth=True).add_yaxis(
+        "", [], is_smooth=True).add_yaxis(
         series_name="现有确诊",
         y_axis=china_day_list_now_confirm,
         label_opts=opts.LabelOpts(
@@ -923,6 +926,7 @@ china_now_confirm_line = (
 rate_line = (
     Line().add_xaxis(
         xaxis_data=china_day_add_list_date).add_yaxis(
+        "", [], is_smooth=True).add_yaxis(
         is_smooth=True,
         series_name="治愈率",
         y_axis=china_day_list_heal_rate).add_yaxis(
@@ -1026,6 +1030,7 @@ big_local_new_confirm_line = (Line().add_xaxis(
 big_china_add_line = (
     Line().add_xaxis(
         xaxis_data=china_day_add_list_date).add_yaxis(
+        "", [], is_smooth=True).add_yaxis(
         is_smooth=True,
         series_name="新增确诊",
         y_axis=china_day_add_list_confirm).add_yaxis(
@@ -1066,6 +1071,8 @@ big_china_merge_confirm_line = (
 
 big_china_now_confirm_line = (
     Line().add_xaxis(xaxis_data=china_day_list_date).add_yaxis(
+        "", [], is_smooth=True).add_yaxis(
+        "", [], is_smooth=True).add_yaxis(
         series_name="现有确诊",
         y_axis=china_day_list_now_confirm,
         label_opts=opts.LabelOpts(
@@ -1083,6 +1090,7 @@ big_china_now_confirm_line = (
 
 big_rate_line = (
     Line().add_xaxis(xaxis_data=china_day_add_list_date).add_yaxis(
+        "", [], is_smooth=True).add_yaxis(
         is_smooth=True,
         series_name="治愈率",
         y_axis=china_day_list_heal_rate).add_yaxis(
